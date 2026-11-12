@@ -111,7 +111,7 @@
 
 <header>
   <div class="bar">
-    <div class="logo">🔥 ChipCool</div>
+    <div class="logo" id="brandLogo">🔥 ChipCool</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
     <nav id="nav">
       <button data-p="masalah" class="active">Masalah</button>
@@ -131,27 +131,84 @@
   <div class="hero">
     <span class="tag">Pertanyaan Besar</span>
     <h1>Bagaimana cara menjaga chip tetap dingin agar perangkat tetap cepat dan awet?</h1>
-    <p>Setiap HP, laptop, dan komputer punya chip yang bekerja keras. Semakin keras bekerja, semakin panas. Kalau panasnya tidak dibuang, perangkat jadi lambat bahkan bisa rusak.</p>
+    <p>Setiap HP, laptop, dan komputer punya chip yang bekerja keras di dalam ruang yang sangat sempit. Semakin keras ia bekerja, semakin banyak listrik yang berubah menjadi panas. Kalau panas ini terperangkap dan tidak dibuang, perangkat Anda akan melambat drastis bahkan rusak permanen.</p>
     <button class="btn" onclick="go('data')">Lihat Datanya →</button>
   </div>
 
-  <h2>Mengapa chip bisa panas?</h2>
-  <p>Chip berisi miliaran transistor kecil. Setiap kali transistor menyala dan mati, sebagian listrik berubah menjadi panas. Panas ini berkumpul di area yang sangat kecil, jadi suhunya naik dengan cepat.</p>
+  <!-- ILUSTRASI VISUAL MINI 1: TRANSISTOR & PANAS -->
+  <h2>Anatomi Masalah: Dari Mana Panas Berasal?</h2>
+  <p>Bayangkan sebuah chip sekecil kuku jari tangan. Di dalamnya terdapat miliaran sakelar mini bernama <strong>transistor</strong> yang menyala dan mati miliaran kali dalam sedetik. Setiap kali sakelar itu berubah posisi, sebagian kecil energi listrik terbuang menjadi energi panas.</p>
+
+  <div class="card" style="margin-bottom:18px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <h3 style="margin:0;">Visualisasi: Aktivitas Transistor vs Suhu Chip</h3>
+      <span id="transStatus" class="pill" style="background:rgba(58,184,255,0.15); color:var(--cool);">Beban Normal</span>
+    </div>
+    <p class="small">Geser tingkat aktivitas chip untuk melihat bagaimana jutaan transistor menumpuk panas secara eksponensial di ruang sempit.</p>
+    <input type="range" id="transSlider" min="1" max="100" value="40" style="margin:8px 0;">
+    <div style="display:flex; gap:10px; align-items:center;">
+      <div style="flex:1; background:var(--card2); height:14px; border-radius:7px; overflow:hidden;">
+        <div id="transBar" style="width:40%; height:100%; background:linear-gradient(90deg,var(--cool),var(--hot)); transition:width 0.2s;"></div>
+      </div>
+      <span id="transVal" style="font-weight:700; font-size:0.95rem; min-width:45px;">40°C</span>
+    </div>
+  </div>
 
   <div class="grid">
-    <div class="card"><h3>⚡ Listrik jadi panas</h3><p class="small">Hampir semua energi listrik yang dipakai chip akhirnya berubah menjadi panas.</p></div>
-    <div class="card"><h3>📦 Ruang sempit</h3><p class="small">Di HP dan laptop tipis, tidak ada banyak ruang untuk kipas atau pendingin besar.</p></div>
-    <div class="card"><h3>🎮 Beban berat</h3><p class="small">Gaming, edit video, dan AI membuat chip bekerja maksimal sehingga lebih panas.</p></div>
+    <div class="card">
+      <h3>⚡ 1. Arus Listrik & Transistor</h3>
+      <p class="small">Hampir 100% energi listrik yang masuk ke dalam chip ujung-ujungnya dikonversi menjadi energi panas (hukum kekekalan energi).</p>
+    </div>
+    <div class="card">
+      <h3>📦 2. Ruang Tanpa Celah</h3>
+      <p class="small">Ponsel pintar dan laptop tipis tidak memiliki ruang kosong yang cukup untuk aliran udara alami, membuat panas cepat terkonsentrasi.</p>
+    </div>
+    <div class="card">
+      <h3>🎮 3. Beban Kerja Ekstrem</h3>
+      <p class="small">Bermain game beresolusi tinggi, merender video 4K, atau menjalankan kecerdasan buatan (AI) memaksa seluruh inti (core) menyala penuh secara bersamaan.</p>
+    </div>
   </div>
 
-  <h2>Apa dampaknya?</h2>
-  <p>Klik tiap dampak untuk melihat penjelasannya:</p>
+  <h2>Apa Dampak Nyata Jika Chip Terlalu Panas?</h2>
+  <p>Pilih kategori di bawah ini untuk memahami dampak langsung yang sering Anda rasakan pada perangkat:</p>
+  
   <div class="tabs" id="dampakTabs">
-    <button class="on" data-i="0">🐢 Lambat</button>
-    <button data-i="1">🔋 Boros baterai</button>
-    <button data-i="2">⏳ Cepat rusak</button>
+    <button class="on" data-i="0">🐢 Kinerja Lambat (Throttling)</button>
+    <button data-i="1">🔋 Baterai Cepat Habis</button>
+    <button data-i="2">⏳ Komponen Cepat Rusak</button>
   </div>
   <div class="card" id="dampakText"></div>
+
+  <!-- ILUSTRASI VISUAL DIAGRAM MASALAH -->
+  <div class="viz" style="margin-top:20px;">
+    <h3>Skema Rantai Masalah Panas</h3>
+    <p class="small">Siklus berantai yang terjadi ketika sistem pendingin gagal membuang panas perangkat:</p>
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; justify-content:space-between; text-align:center;">
+      <div class="card" style="flex:1; min-width:140px; background:var(--card2);">
+        <div style="font-size:1.5rem; margin-bottom:4px;">🔥</div>
+        <strong>Beban Tinggi</strong>
+        <p class="small" style="margin-top:4px;">Gaming / Render</p>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--muted); font-weight:bold;">➔</div>
+      <div class="card" style="flex:1; min-width:140px; background:var(--card2);">
+        <div style="font-size:1.5rem; margin-bottom:4px;">📈</div>
+        <strong>Suhu Melonjak</strong>
+        <p class="small" style="margin-top:4px;">Panas menumpuk di chip</p>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--muted); font-weight:bold;">➔</div>
+      <div class="card" style="flex:1; min-width:140px; background:var(--card2);">
+        <div style="font-size:1.5rem; margin-bottom:4px;">🛡️</div>
+        <strong>Throttling</strong>
+        <p class="small" style="margin-top:4px;">Kecepatan dipangkas paksa</p>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--muted); font-weight:bold;">➔</div>
+      <div class="card" style="flex:1; min-width:140px; background:var(--card2);">
+        <div style="font-size:1.5rem; margin-bottom:4px;">💻</div>
+        <strong>Lag / Patah-patah</strong>
+        <p class="small" style="margin-top:4px;">Pengalaman pengguna buruk</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ================= HALAMAN 2: DATA & ANALISIS ================= -->
@@ -407,7 +464,6 @@
         <tr><td>Muhammad Arkananta Permana (23/X-rpl)</td><td>Penyusun konten / Pembuat Kode</td></tr>
         <tr><td>Gabriel Lightning Elmagnifico (16/X-rpl)</td><td>Pencari data dan sumber</td></tr>
         <tr><td>Benedictus Taffarel Yeshua Ariyanto (10/X-rpl)</td><td>Desain tampilan / penguji</td></tr>
-        
       </tbody>
     </table>
   </div>
@@ -442,11 +498,11 @@
   }
   document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.p));
 
-  // ---------- Tab dampak ----------
+  // ---------- Tab dampak yang diperluas dan interaktif ----------
   const dampak = [
-    '<h3>🐢 Perangkat jadi lambat</h3><p class="small">Saat terlalu panas, chip otomatis menurunkan kecepatannya agar tidak rusak (thermal throttling). Hasilnya game patah-patah dan aplikasi lemot.</p>',
-    '<h3>🔋 Baterai lebih boros</h3><p class="small">Chip yang panas cenderung boros daya dan panas juga mempercepat penuaan baterai.</p>',
-    '<h3>⏳ Umur komponen lebih pendek</h3><p class="small">Suhu tinggi dalam waktu lama mempercepat kerusakan komponen elektronik.</p>'
+    '<h3>🐢 Perangkat Jadi Lambat (Thermal Throttling)</h3><p class="small">Saat suhu chip menyentuh batas kritis (biasanya sekitar 95°C–100°C), sistem keamanan internal mendeteksi bahaya kerusakan. Prosesor akan secara otomatis <strong>memangkas kecepatan clock (frekuensi)</strong> secara drastis agar suhunya turun. Akibatnya, game mendadak patah-patah (lag), animasi HP tersendat, dan aplikasi berat terasa lambat.</p>',
+    '<h3>🔋 Baterai Jauh Lebih Boros & Cepat Drop</h3><p class="small">Semakin tinggi suhu di dalam perangkat, hambatan listrik internal pada komponen ikut meningkat. Hal ini membuat sirkuit membutuhkan lebih banyak arus listrik untuk melakukan tugas yang sama. Selain itu, panas berlebih adalah musuh utama kimia internal baterai Li-ion, membuatnya cepat drop dan kembung dalam jangka panjang.</p>',
+    '<h3>⏳ Umur Komponen Cepat Rusak (Degradasi Elektromigrasi)</h3><p class="small">Suhu tinggi memicu fenomena fisika bernama <em>elektromigrasi</em>—pergerakan atom logam mikroskopis pada jalur sirkuit chip akibat panas dan arus tinggi. Dalam jangka panjang, jalur ini bisa menipis, putus, atau mengalami korsleting, membuat perangkat mati total sebelum waktunya.</p>'
   ];
   const dt = document.getElementById('dampakText');
   dt.innerHTML = dampak[0];
@@ -455,6 +511,31 @@
       document.querySelectorAll('#dampakTabs button').forEach(x=>x.classList.remove('on'));
       b.classList.add('on'); dt.innerHTML = dampak[b.dataset.i];
     };
+  });
+
+  // ---------- Interaktif Mini Slider untuk Bagian Masalah ----------
+  const tSlider = document.getElementById('transSlider');
+  const tBar = document.getElementById('transBar');
+  const tVal = document.getElementById('transVal');
+  const tStatus = document.getElementById('transStatus');
+  tSlider.addEventListener('input', (e)=>{
+    const val = +e.target.value;
+    const estTemp = Math.round(30 + val * 0.75);
+    tBar.style.width = val + '%';
+    tVal.textContent = estTemp + '°C';
+    if(estTemp < 50){
+      tStatus.textContent = 'Beban Ringan / Santai';
+      tStatus.style.color = 'var(--ok)';
+      tStatus.style.background = 'rgba(46,204,143,0.15)';
+    } else if(estTemp < 80){
+      tStatus.textContent = 'Beban Sedang (Multitasking)';
+      tStatus.style.color = 'var(--warm)';
+      tStatus.style.background = 'rgba(255,176,32,0.15)';
+    } else {
+      tStatus.textContent = 'Beban Berat (Gaming / AI / Render)';
+      tStatus.style.color = 'var(--hot)';
+      tStatus.style.background = 'rgba(255,90,54,0.18)';
+    }
   });
 
   // ---------- Grafik batang ----------
